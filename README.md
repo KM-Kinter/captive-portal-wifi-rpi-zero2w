@@ -2,9 +2,11 @@
 
 ## Before start:
 run this commands to install needed libraries:
+
 ```sudo apt-get update
 sudo apt-get install python3-pip
-pip3 install flask wifi subprocess```
+pip3 install flask wifi subprocess
+```
 
 ## After start:
 run `python3 setup_ap.py` to start AP from your device;
