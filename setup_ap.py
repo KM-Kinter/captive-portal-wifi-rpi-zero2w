@@ -7,6 +7,7 @@ def setup_ap(ssid, password, interface="wlan0"):
     subprocess.run(['sudo', 'ifconfig', interface, '192.168.100.1', 'netmask', '255.255.255.0'], check=True)
     subprocess.run(['sudo', 'ifconfig', interface, 'up'], check=True)
 
+    # Generate hostapd config
     hostapd_config = f"""
     interface={interface}
     driver=nl80211
@@ -22,23 +23,25 @@ def setup_ap(ssid, password, interface="wlan0"):
     wpa_key_mgmt=WPA-PSK
     rsn_pairwise=CCMP
     """
-    with tempfile.NamedTemporaryFile(delete=False, mode="w") as hostapd_conf:
+    hostapd_conf_path = "/tmp/hostapd.conf"
+    with open(hostapd_conf_path, "w") as hostapd_conf:
         hostapd_conf.write(hostapd_config)
-        hostapd_conf_path = hostapd_conf.name
 
+    # Generate dnsmasq config
     dnsmasq_config = f"""
     interface={interface}
     dhcp-range=192.168.100.50,192.168.100.150,255.255.255.0,24h
     """
-    with tempfile.NamedTemporaryFile(delete=False, mode="w") as dnsmasq_conf:
+    dnsmasq_conf_path = "/tmp/dnsmasq.conf"
+    with open(dnsmasq_conf_path, "w") as dnsmasq_conf:
         dnsmasq_conf.write(dnsmasq_config)
-        dnsmasq_conf_path = dnsmasq_conf.name
 
     subprocess.run(['sudo', 'sysctl', '-w', 'net.ipv4.ip_forward=1'], check=True)
     subprocess.run(['sudo', 'iptables', '--table', 'nat', '-A', 'POSTROUTING', '-o', 'eth0', '-j', 'MASQUERADE'], check=True)
     subprocess.run(['sudo', 'iptables', '-A', 'FORWARD', '-i', interface, '-o', 'eth0', '-j', 'ACCEPT'], check=True)
     subprocess.run(['sudo', 'iptables', '-A', 'FORWARD', '-i', 'eth0', '-o', interface, '-m', 'state', '--state', 'ESTABLISHED,RELATED', '-j', 'ACCEPT'], check=True)
 
+    # Start hostapd
     hostapd_process = subprocess.Popen(['sudo', 'hostapd', hostapd_conf_path], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     dnsmasq_process = subprocess.Popen(['sudo', 'dnsmasq', '-C', dnsmasq_conf_path], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
