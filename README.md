@@ -30,7 +30,7 @@ sudo apt install python3-pip python3-dev wireless-tools
 
 `sudo python3 app.py`
 
-The web portal will be available at http://<your-pi-ip>:80
+The web portal will be available at http://your-pi-ip:80
 
 ## Setting up Autostart using systemd
 To ensure the application starts automatically on boot using systemd, follow these steps:
