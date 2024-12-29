@@ -19,9 +19,9 @@ def get_available_networks():
 
 @app.route('/')
 def index():
-    if check_internet():
-        return "Jesteś połączony z internetem!", 200
-    else:
+    # if check_internet():
+    #     return "Jesteś połączony z internetem!", 200
+    # else:
         networks = get_available_networks()
         return render_template_string("""
             <html>
