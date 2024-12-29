@@ -53,6 +53,7 @@ Restart=always
 
 [Install]
 WantedBy=multi-user.target```
+
 Make sure to replace /path/to/your/project/ with the actual path to your project directory.
 
 3. Enable and start the service:
