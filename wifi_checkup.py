@@ -8,10 +8,10 @@ def is_connected():
     wlan0_ip = subprocess.getoutput("ip addr show wlan0 | grep inet")
     eth0_ip = subprocess.getoutput("ip addr show eth0 | grep inet")
     
-    if wlan0_ip or eth0_ip:
-        return True
-    else:
-        return False
+    # if wlan0_ip or eth0_ip:
+    #     return True
+    # else:
+    return False
 
 def connect_to_wifi(ssid, password):
     config = f"""
