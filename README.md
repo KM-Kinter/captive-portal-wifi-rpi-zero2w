@@ -48,7 +48,7 @@ After=network.target
 [Service]
 ExecStart=/usr/bin/python3 /path/to/your/project/app.py
 WorkingDirectory=/path/to/your/project
-User=change-to-yours
+User=pi
 Group=pi
 Restart=always
 
