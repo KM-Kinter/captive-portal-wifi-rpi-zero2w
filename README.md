@@ -20,7 +20,7 @@ sudo apt install python3-pip python3-dev wireless-tools
 
 2. Install Python libraries:
 
-```sudo pip3 install flask wifi```
+`sudo pip3 install flask wifi`
 
 ## Running the Application
 
@@ -40,7 +40,8 @@ To ensure the application starts automatically on boot using systemd, follow the
 
 2. Add the following content to the file:
 
-```[Unit]
+```
+[Unit]
 Description=WiFi Setup Portal
 After=network.target
 
@@ -52,7 +53,8 @@ Group=pi
 Restart=always
 
 [Install]
-WantedBy=multi-user.target```
+WantedBy=multi-user.target
+```
 
 Make sure to replace /path/to/your/project/ with the actual path to your project directory.
 
