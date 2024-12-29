@@ -6,12 +6,16 @@
     <title>WiFi Setup</title>
 </head>
 <body>
-    <h1>WiFi Setup</h1>
-    <form method="POST">
-        <label for="ssid">SSID:</label><br>
-        <input type="text" id="ssid" name="ssid" required><br><br>
+    <h1>Connect to a Wi-Fi Network</h1>
+    <form action="/" method="POST">
+        <label for="network">Select Network:</label>
+        <select id="network" name="network">
+            {% for network in networks %}
+                <option value="{{ network.ssid }}">{{ network.ssid }}</option>
+            {% endfor %}
+        </select><br><br>
 
-        <label for="password">Password:</label><br>
+        <label for="password">Enter Password:</label>
         <input type="password" id="password" name="password" required><br><br>
 
         <input type="submit" value="Connect">
