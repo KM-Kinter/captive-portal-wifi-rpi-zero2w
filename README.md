@@ -59,9 +59,11 @@ WantedBy=multi-user.target
 Make sure to replace /path/to/your/project/ with the actual path to your project directory.
 
 3. Enable and start the service:
-```sudo systemctl daemon-reload
+```
+sudo systemctl daemon-reload
 sudo systemctl enable wifi-setup.service
-sudo systemctl start wifi-setup.service```
+sudo systemctl start wifi-setup.service
+```
 4. Check the status of the service:
 `sudo systemctl status wifi-setup.service`
 
