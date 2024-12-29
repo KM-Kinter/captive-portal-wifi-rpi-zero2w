@@ -32,22 +32,37 @@ sudo apt install python3-pip python3-dev wireless-tools
 
 The web portal will be available at http://<your-pi-ip>:80
 
-## Set up autostart
+## Setting up Autostart using systemd
+To ensure the application starts automatically on boot using systemd, follow these steps:
 
-To make the application run on startup:
+1. Create a new systemd service file:
+`sudo nano /etc/systemd/system/wifi-setup.service`
 
-1. Open the crontab configuration:
+2. Add the following content to the file:
 
-`crontab -e`
+```[Unit]
+Description=WiFi Setup Portal
+After=network.target
 
-2. Add the following line to the end of the file:
+[Service]
+ExecStart=/usr/bin/python3 /path/to/your/project/app.py
+WorkingDirectory=/path/to/your/project
+User=change-to-yours
+Group=pi
+Restart=always
 
-`@reboot /usr/bin/python3 /path/to/your/project/wifi_checkup.py &`
+[Install]
+WantedBy=multi-user.target```
+Make sure to replace /path/to/your/project/ with the actual path to your project directory.
 
-Replace /path/to/your/project/ with the actual path to your project.
+3. Enable and start the service:
+```sudo systemctl daemon-reload
+sudo systemctl enable wifi-setup.service
+sudo systemctl start wifi-setup.service```
+4. Check the status of the service:
+`sudo systemctl status wifi-setup.service`
 
-Save and exit (Ctrl+X, then press Y and Enter).
-Now, your Raspberry Pi will start the Wi-Fi setup portal automatically every time it boots up.
+Your application will now automatically start on boot and be available on port 80.
 
 ## Notes
 The portal will be available on port 80, and you can access it via any device connected to the Raspberry Pi's network.
